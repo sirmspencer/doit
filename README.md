@@ -6,6 +6,8 @@ a purposely simple aliasing tool
 
 Well anything and nothing.  
 
+A system to do aliasing that is both bases on an idividual home alias config merged with a project specific alias config.
+
 This will be an aliasing tool so simple it can do anything.  The idea here is to alias the first bit of any cli call and then also allow for any additional part of a cli call to be added.
 
 ```do
