@@ -54,20 +54,20 @@ same as above
 
 We have a deps.edn where every alias is defined independently instead of a large specific alias.
 
-;; insert
+{:aliases {:env {:example "x"}}}
 
 then we get calls like 
 
-clojure -M:env/dev:dev/deps:test/deps:migrate/deps:repl/cider:dev/go
+clojure -M:env
 
 And a makefile could be 
 
 ```make
 dev:
-	clojure -M:env/dev:dev/deps:test/deps:migrate/deps:repl/cider:dev/go
+	clojure -M:env
 ```
 
 For calling `make dev`
 
-The issues is that you cant then do `make dev --watch` or `make dev:my-home/cider`
+The issues is that you cant then do `make dev --watch` or `make dev:cider`
 
