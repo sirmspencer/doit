@@ -50,7 +50,7 @@ same as above
 
 `npm run lss -lash` doesnt work because the `-lash` is an input to `npm` not `ls`.
 
-### Clojure specific
+### Clojure specific examples
 
 We have a deps.edn where every alias is defined independently instead of a large specific alias.
 
@@ -71,3 +71,20 @@ For calling `make dev`
 
 The issues is that you cant then do `make dev --watch` or `make dev:cider`
 
+## Plan
+
+create a tool that can take any cli call and replace the first bit with an alias.
+
+For example 
+
+```do
+clojure-m:
+   clojure -M
+
+test:
+   lein kaocha
+```
+
+`clojure-m:dev` -> `clojure -M:dev`
+
+`do test --wactch` -> `lain kaocha --watch`
