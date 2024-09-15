@@ -50,3 +50,24 @@ same as above
 
 `npm run lss -lash` doesnt work because the `-lash` is an input to `npm` not `ls`.
 
+### Clojure specific
+
+We have a deps.edn where every alias is defined independently instead of a large specific alias.
+
+;; inserts
+
+then we get calls like 
+
+clojure -M:env/dev:dev/deps:test/deps:migrate/deps:repl/cider:dev/go
+
+And a makefile could be 
+
+```make
+dev:
+	clojure -M:env/dev:dev/deps:test/deps:migrate/deps:repl/cider:dev/go
+```
+
+For calling `make dev`
+
+The issues is that you cant then do `make dev --watch` or `make dev:my-home/cider`
+
