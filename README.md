@@ -38,4 +38,15 @@ This wont work `make ls -lash`. taking in params are annoyingling specific to ea
 
 ### package.json
 
+same as above
+
+```json
+  "scripts": {
+    "lss": "ls",
+  },
+```
+
+`npm run lss` is fine
+
+`npm run lss -lash` doesnt work because the `-lash` is an input to `npm` not `ls`.
 
