@@ -13,11 +13,16 @@ This will be an aliasing tool so simple it can do anything.  The idea here is to
 ```do
 my-alias:
   ls
+
+my-clojure-alias
+  clojure -M:dev
 ```
 
 `do my-alias`
 
-`do my alias -lash`
+`do my-alias -lash`
+
+`do my-clojure-alias:repl`
 
 etc
 
