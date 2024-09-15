@@ -25,7 +25,15 @@ Lets looks at bashrc
 alias lls=ls
 ```
 
-You can call `lls -lash` like if you were calling `ls -lash`.  Great.  What you cant do is tie this to a project / repo.  Doesnt solve clojure specific syntax like `lls:my-thing`
+You can call `lls -lash` like if you were calling `ls -lash`.  Great.  What you cant do is tie this to a project / repo. 
+
+#### appending 
+
+```bash
+alias ccm=clojure -M
+```
+
+You cant do  `ccm:my-repl`
 
 ### make file
 
