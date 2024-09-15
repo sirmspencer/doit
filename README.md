@@ -78,13 +78,13 @@ create a tool that can take any cli call and replace the first bit with an alias
 For example 
 
 ```do
-clojure-m:
+m-that-clojure
    clojure -M
 
 test:
    lein kaocha
 ```
 
-`clojure-m:dev` -> `clojure -M:dev`
+`m-that-clojure:dev` -> `clojure -M:dev`
 
 `do test --wactch` -> `lain kaocha --watch`
