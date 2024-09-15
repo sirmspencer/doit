@@ -6,7 +6,7 @@ a purposely simple aliasing tool
 
 Well anything and nothing.  
 
-This is an aliasing tool so simple it can do anything.  The idea here is to alias the first bit of any cli call and then also allow for any additional part of a cli call to be added.
+This will be an aliasing tool so simple it can do anything.  The idea here is to alias the first bit of any cli call and then also allow for any additional part of a cli call to be added.
 
 ## Motivation
 
