@@ -8,6 +8,17 @@ Well anything and nothing.
 
 This will be an aliasing tool so simple it can do anything.  The idea here is to alias the first bit of any cli call and then also allow for any additional part of a cli call to be added.
 
+```do
+my-alias:
+  ls
+```
+
+`do my-alias`
+
+`do my alias -lash`
+
+etc
+
 ## Motivation
 
 There are other cli tools that help alot.  Makefile, package.json, bashrc, etc.  They all help but have limitations.  The limitations are about how much you can extend a call.
