@@ -74,7 +74,7 @@ same as above
 
 `npm run lss` is fine
 
-`npm run lss -lash` doesnt work because the `-lash` is an input to `npm` not `ls`.
+`npm run lss -lash` doesnt work because the `-lash` is a param to `npm` not `ls`.
 
 ### Clojure specific examples
 
