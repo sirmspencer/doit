@@ -54,7 +54,7 @@ same as above
 
 We have a deps.edn where every alias is defined independently instead of a large specific alias.
 
-;; inserts
+;; insert
 
 then we get calls like 
 
