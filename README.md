@@ -73,7 +73,7 @@ The issues is that you cant then do `make dev --watch` or `make dev:cider`
 
 ## Plan
 
-create a tool that can take any cli call and replace the first bit with an alias.
+create a tool that can take any cli call and replace the first bit with an alias.  This is a basic string replacement really, but with the same hierarchy youd expect from home / repo.  The alias definitions can be per project / repo specific calls. That sorta exists, but in this case the local dev can add closure aliases or cli params.
 
 For example 
 
