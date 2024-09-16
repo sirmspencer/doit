@@ -111,6 +111,6 @@ test:
    lein kaocha
 ```
 
-`m-that-clojure:dev` -> `clojure -M:dev`
+`do m-that-clojure:dev` -> `clojure -M:dev`
 
 `do test --wactch` -> `lain kaocha --watch`
