@@ -4,7 +4,7 @@ task1:
 task2 ^override:
   clojure -M:project/2
 
-task3:
+task3 ^override:
   clojure -M:project/3
 
 task4:
