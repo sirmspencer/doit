@@ -1,4 +1,1 @@
-{:deps {org.clojure/clojure {:mvn/version "1.11.3"}
-        fipp/fipp {:mvn/version "0.6.26"}
-        progrock/progrock {:mvn/version "0.1.2"}}
- :tasks {test permits-core/testing}}
+{:deps {org.clojure/clojure {:mvn/version "1.11.3"}}}
