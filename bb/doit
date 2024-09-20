@@ -1,5 +1,5 @@
 #!/usr/bin/env bb
-(ns do
+(ns doit
   (:require [clojure.string :as str]))
 
 ;; Add code
