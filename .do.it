@@ -1,0 +1,2 @@
+brewi:
+  brew reinstall doit -s
