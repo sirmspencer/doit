@@ -118,8 +118,8 @@
       me? (contains-command? params :me)
       config (read-config {:me? me?})
       cmd-replaced (do-replace config cmd)]
-  (shell "ls -la" "./")
-  (shell "ls -la" "../")
+  (println (shell "ls -la" "./"))
+  (println (shell "ls -la" "../"))
   (cond
     (contains-command? params :help)
     (print-help)
