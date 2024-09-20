@@ -113,13 +113,16 @@
 
 ; "^task1 --help ^task44 ^task3"
 
+(println "------------------------")
+(println (shell "ls -la" "./"))
+(println (shell "ls -la" "../"))
+
 (let [cli-input *command-line-args*
       {:keys [params cmd]} (get-params cli-input)
       me? (contains-command? params :me)
       config (read-config {:me? me?})
       cmd-replaced (do-replace config cmd)]
-  (println (shell "ls -la" "./"))
-  (println (shell "ls -la" "../"))
+
   (cond
     (contains-command? params :help)
     (print-help)
