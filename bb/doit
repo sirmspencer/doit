@@ -1,6 +1,7 @@
 #!/usr/bin/env bb
 (ns doit
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [babashka.process :refer [shell process exec]]))
 
 ;; Add code
 
@@ -117,6 +118,8 @@
       me? (contains-command? params :me)
       config (read-config {:me? me?})
       cmd-replaced (do-replace config cmd)]
+  (shell "ls -la" "./")
+  (shell "ls -la" "../")
   (cond
     (contains-command? params :help)
     (print-help)
