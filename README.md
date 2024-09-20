@@ -2,9 +2,13 @@
 
 a purposely simple aliasing tool
 
+## Motivation
+
+Im a lazy typer.  deps.edn set up can lead to long commands that also need particular appending per environment.  Instead of infinite permutations of commands in something like makefile, let the user append in a simple way.
+
 ## do what?
 
-Well anything and nothing.
+Well everything and nothing.
 
 A system to do aliasing that is both based on an individual home alias config merged with a project specific alias config.
 
@@ -145,10 +149,6 @@ If you want to run multiple tasks from this use &&
 bb do.bb --echo ^multiline2
 => mycmd  && mycmd1
 ```
-
-## Motivation
-
-Im a lazy typer.
 
 ## Why not other tools?
 
