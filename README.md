@@ -1,4 +1,4 @@
-# do
+# do.it
 
 a purposely simple aliasing tool
 
