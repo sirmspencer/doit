@@ -1,12 +1,28 @@
 #!/usr/bin/env bb
 (ns doit
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [babashka.fs :as fs]
+            [clojure.java.shell :as sh]))
+
 
 ;; Add code
 
-(defn file->vec [fname]
-  (-> (slurp fname)
-      (str/split #"\n")))
+(def valid-names #{".do.it" "do.it"})
+
+(defn get-local-file []
+  (some (fn [name]
+          (when (fs/exists? (str "./" name))
+            (-> (slurp name)
+                (str/split #"\n"))))
+        valid-names))
+
+(defn get-home-file []
+  (some (fn [name]
+          (let [file-str (:out
+                          (sh/sh "cat" (str (System/getProperty "user.home") (str "/" name))))]
+            (when-not (str/blank? file-str)
+              (str/split file-str #"\n"))))
+        valid-names))
 
 (defn cmds->map [cmds]
   (reduce (fn [acc cur]
@@ -20,52 +36,55 @@
           {}
           cmds))
 
-(defn read-do-file [fname]
-  (let [lines (->> (file->vec fname)
-                   (filterv (complement str/blank?)))
-        cmd-starts (->> lines
-                        (map-indexed (fn [i l]
-                                       (when (re-find #"^[a-zA-Z]+" l)
-                                         i)))
-                        (remove nil?))
-        cmd-groups (loop [cmd-lines cmd-starts
-                          cmd []]
-                     (let [[start end] cmd-lines
-                           this-command (if end
-                                          (subvec lines start end)
-                                          (subvec lines start))
-                           cmds (conj cmd this-command)]
-                       (if (< 1 (count cmd-lines))
-                         (recur (rest cmd-lines)
-                                cmds)
-                         cmds)))
-        override-cmds (->> cmd-groups
-                           (filterv (fn [l] (-> l first (str/includes? "override"))))
-                           cmds->map)
-        reg-cmds     (->> (filterv (fn [l] (-> l first (str/includes? "override") not))
-                                   cmd-groups)
-                          cmds->map)]
-    [override-cmds reg-cmds]))
+(defn read-do-file [file-vec]
+  (let [lines (->> file-vec
+                   (filterv (complement str/blank?)))]
+    (when (seq lines)
+      (let [cmd-starts (->> lines
+                            (map-indexed (fn [i l]
+                                           (when (re-find #"^[a-zA-Z]+" l)
+                                             i)))
+                            (remove nil?))
+            cmd-groups (loop [cmd-lines cmd-starts
+                              cmd []]
+                         (let [[start end] cmd-lines
+                               this-command (if end
+                                              (subvec lines start end)
+                                              (subvec lines start))
+                               cmds (conj cmd this-command)]
+                           (if (< 1 (count cmd-lines))
+                             (recur (rest cmd-lines)
+                                    cmds)
+                             cmds)))
+            override-cmds (->> cmd-groups
+                               (filterv (fn [l] (-> l first (str/includes? "override"))))
+                               cmds->map)
+            reg-cmds     (->> (filterv (fn [l] (-> l first (str/includes? "override") not))
+                                       cmd-groups)
+                              cmds->map)]
+        [override-cmds reg-cmds]))))
 
 (defn read-config [{:keys [me?]}]
-  (let [[home-or home-cmds] (read-do-file "home.do")
-        [project-or project-cmds] (read-do-file "project.do")
+  (let [[home-or home-cmds] (read-do-file (get-home-file))
+        [this-or this-cmds] (read-do-file (get-local-file))
         combined (if me?
-                   (merge project-cmds home-cmds project-or home-or)
-                   (merge home-cmds project-cmds home-or project-or))]
+                   (merge this-cmds home-cmds this-or home-or)
+                   (merge home-cmds this-cmds home-or this-or))]
     (->> combined
          vec
          (sort-by first #(compare (count %2) (count %1))))))
 
 (defn do-replace [config mystr]
-  (loop [mystr mystr]
+  (loop [mystr mystr
+         cnt 0]
     (let [replaced (reduce (fn [acc [find replace]]
                              (str/replace acc (str "^" find) replace))
                            mystr
                            config)]
-      (if (str/includes? replaced "^")
-        (recur replaced)
-        replaced))))
+      (cond
+        (< 100 cnt) (throw (ex-info (str "Missing tasks definitions: " mystr) {}))
+        (str/includes? replaced "^") (recur replaced (inc cnt))
+        :else replaced))))
 
 (def known-commands
   {:help {:param-count 1
@@ -76,7 +95,10 @@
           :help "-m --me will change the merge order to favor home tasks"}
    :echo {:param-count 1
           :key :echo
-          :help "-e --echo will print the command without running it"}})
+          :help "-e --echo will print the command without running it"}
+   :dev {:param-count 1
+         :key :dev
+         :help "-d --dev will call whatever dev hook is set"}})
 
 (defn get-command [cmd]
   (case cmd
@@ -109,8 +131,6 @@
   (doseq [[_ {:keys [help]}] known-commands]
     (println help)
     (println "")))
-
-; "^task1 --help ^task44 ^task3"
 
 (let [cli-input *command-line-args*
       {:keys [params cmd]} (get-params cli-input)
