@@ -48,8 +48,8 @@
     [override-cmds reg-cmds]))
 
 (defn read-config [{:keys [me?]}]
-  (let [[home-or home-cmds] (read-do-file "home.do")
-        [project-or project-cmds] (read-do-file "project.do")
+  (let [[home-or home-cmds] (read-do-file "../home.do")
+        [project-or project-cmds] (read-do-file "../project.do")
         combined (if me?
                    (merge project-cmds home-cmds project-or home-or)
                    (merge home-cmds project-cmds home-or project-or))]
