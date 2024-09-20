@@ -8,7 +8,7 @@ Well anything and nothing.
 
 A system to do aliasing that is both based on an individual home alias config merged with a project specific alias config.
 
-This will be an aliasing tool so simple it can do anything.  The idea here is to alias the first bit of any cli call and then also allow for any additional part of a cli call to be added.
+This will be an aliasing tool so simple it can do anything.  The idea here is to alias any bit of any cli call with basic string parsing so any command can be generated.
 
 ```do
 my-alias:
@@ -24,9 +24,7 @@ my-clojure-alias
 
 `do ^my-clojure-alias:repl`
 
-etc
-
-### Home alias
+### Home / project hierarchy
 
 By default the load in this order, with the last loaded taking priority.
 
@@ -151,6 +149,8 @@ bb do.bb --echo ^multiline2
 ## Motivation
 
 Im a lazy typer.
+
+## Why not other tools?
 
 There are other cli tools that help alot.  Makefile, package.json, bashrc, etc.  None of these solutions work well for certain clojure specific aliases.  They don't include the same home -> project hierarchy you get from lein or deps.edn.
 
