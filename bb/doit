@@ -2,7 +2,8 @@
 (ns doit
   (:require [clojure.string :as str]
             [babashka.fs :as fs]
-            [clojure.java.shell :as sh]))
+            [clojure.java.shell :as sh]
+            [babashka.process :refer [shell]]))
 
 
 ;; Add code
@@ -146,4 +147,4 @@
     (println cmd-replaced)
 
     :else
-    cmd-replaced))
+    (shell cmd-replaced)))

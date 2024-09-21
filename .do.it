@@ -1,2 +1,8 @@
-brewi:
+re:
   brew reinstall doit -s
+
+edit:
+  brew edit doit
+
+cp-brew:
+  cp /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/d/doit.rb ~/ext-github/tap/doit.rb
