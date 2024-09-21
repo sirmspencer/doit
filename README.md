@@ -8,11 +8,11 @@ Im a lazy typer.  deps.edn set up can lead to long commands that also need parti
 
 ## do what?
 
-Well everything and nothing.
+Well everything and nothing.  Its just an aliasing tool, but can call any other build tool, etc.
 
-A system to do aliasing that is both based on an individual home alias config merged with a project specific alias config.
+Do.it does aliasing that is both based on an individual home alias config merged with a project specific alias config.
 
-This will be an aliasing tool so simple it can do anything.  The idea here is to alias any bit of any cli call with basic string parsing so any command can be generated.
+The idea here is to alias any bit of any cli call with basic string parsing so any command can be generated.
 
 ```do
 my-alias:
@@ -43,6 +43,37 @@ When called with `do -me ^my-alias` it will reverse the priority of home vs proj
 2. Home aliases
 3. Project aliases marked with `^override`
 4. Home aliases marked with `^override`
+
+## Use
+
+### Install
+
+Using homebrew
+
+```sh
+brew tap sirmspencer/tap
+brew install doit
+```
+
+### Config
+
+Create `do.it` (`.do.it` also supported) in your home or local / project directory.  Add a task.
+
+```sh
+mytask:
+  ls -lash
+```
+
+## Limitations
+
+- Not windows compatible
+- Some path aliases need special treatment.  For example `~/` gets replaced with the full path from system properties.  Not sure how many others there are.
+- The local / project file is only read from current directory
+
+## Wishlist
+
+- Read local from project root and not just current directory, if in a git project.
+- Variables. sum like `^task:repl --param ^var1^=dev`
 
 ## Demo
 

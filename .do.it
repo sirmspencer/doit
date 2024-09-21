@@ -9,3 +9,8 @@ cp-brew:
 
 lls:
   ls -lash
+
+publish:
+  git push
+  && ./auto-increment.sh
+  && git push --tags

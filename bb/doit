@@ -85,7 +85,7 @@
       (cond
         (< 100 cnt) (throw (ex-info (str "Missing tasks definitions: " mystr) {}))
         (str/includes? replaced "^") (recur replaced (inc cnt))
-        :else replaced))))
+        :else (str/replace replaced "~/" (str (System/getProperty "user.home") "/"))))))
 
 (def known-commands
   {:help {:param-count 1
@@ -147,4 +147,4 @@
     (println cmd-replaced)
 
     :else
-    (exec cmd-replaced)))
+    (shell cmd-replaced)))
