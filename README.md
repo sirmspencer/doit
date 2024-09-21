@@ -72,8 +72,10 @@ mytask:
 
 ## Wishlist
 
+- Add tests
 - Read local from project root and not just current directory, if in a git project.
 - Variables. sum like `^task:repl --param ^var1^=dev`
+- Windows compatible
 
 ## Examples
 
