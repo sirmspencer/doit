@@ -133,14 +133,9 @@
     (println help)
     (println "")))
 
-(defn exec-wrapper [cmd-str]
-  (let [bits (str/split cmd-str #"\s")]
-    (apply exec bits)))
-
 (defn sh-wrapper [cmd-str]
   (let [cmds (str/split cmd-str #"&&")]
     (doseq [cmd cmds]
-      (println "-- " cmd)
       (shell cmd))))
 
 (comment
