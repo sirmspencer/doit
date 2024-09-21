@@ -11,9 +11,11 @@ lls:
   ls -lash
 
 auto-commit:
-  git add . && git commit -m auto-publish
+  git add .
+  && git commit -m auto-publish
 
 publish:
-  git push
+  ^auto-commit
+  && git push
   && sh auto-increment.sh
   && git push --tags
