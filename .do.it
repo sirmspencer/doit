@@ -12,5 +12,5 @@ lls:
 
 publish:
   git push
-  && ./auto-increment.sh
+  && sh auto-increment.sh
   && git push --tags
