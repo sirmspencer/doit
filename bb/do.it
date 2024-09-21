@@ -29,5 +29,5 @@ auto-commit:
 publish:
   ^auto-commit
   && git push
-  && sh auto-increment.sh
+  && sh ../auto-increment.sh
   && git push --tags
