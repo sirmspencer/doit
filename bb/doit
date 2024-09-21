@@ -140,7 +140,11 @@
 (defn sh-wrapper [cmd-str]
   (let [cmds (str/split cmd-str #"&&")]
     (doseq [cmd cmds]
-      (exec-wrapper cmd))))
+      (println "-- " cmd)
+      (shell cmd))))
+
+(comment
+  (str/split "git add . && git commit -m auto-publish" #"&&"))
 
 (let [cli-input *command-line-args*
       {:keys [params cmd]} (get-params cli-input)
