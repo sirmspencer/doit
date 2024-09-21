@@ -2,10 +2,6 @@
 
 a purposely simple aliasing tool
 
-## Motivation
-
-Im a lazy typer.  deps.edn set up can lead to long commands that also need particular appending per environment.  Instead of infinite permutations of commands in something like makefile, let the user append in a simple way.
-
 ## do what?
 
 Well everything and nothing.  Its just an aliasing tool, but can call any other build tool, etc.
@@ -22,11 +18,11 @@ my-clojure-alias
   clojure -M:dev
 ```
 
-`do ^my-alias`
+`do ^my-alias` => `ls`
 
-`do ^my-alias -lash`
+`do ^my-alias -lash` => `ls -lash`
 
-`do ^my-clojure-alias:repl`
+`do ^my-clojure-alias:repl` => `clojure -M:dev:repl`
 
 ### Home / project hierarchy
 
@@ -43,6 +39,14 @@ When called with `do -me ^my-alias` it will reverse the priority of home vs proj
 2. Home aliases
 3. Project aliases marked with `^override`
 4. Home aliases marked with `^override`
+
+## Motivation
+
+Im a lazy typer.
+
+### Hey I use clojure deps.edn
+
+deps.edn set up can lead to long commands that also need particular appending per environment.  This is of course user preference on how the aliases are set up.  In my team we have many devs using many set ups.  If we were to use Makefile, for example, there would be a huge permutation of commands like `clojure -M:dev:vscode`, `clojure -M:dev:emacs`, `clojure -M:dev:test:vscode`, `clojure -M:dev:test:emacs`, etc depending on the task, environment, and dev preference.  Something like Makefile would need a long list of combinations to cover them all.
 
 ## Use
 
@@ -61,7 +65,13 @@ Create `do.it` (`.do.it` also supported) in your home or local / project directo
 
 ```sh
 mytask:
-  ls -lash
+  ls
+```
+
+Call with
+
+```sh
+doit ^mytask -lash
 ```
 
 ## Limitations
@@ -79,166 +89,10 @@ mytask:
 
 ## Examples
 
-Refer to /demo for the config used to generate these.
-
-### Project level task
-
-```sh
-doit --echo ^task1
-=> clojure -M:project/1
-```
-
-Prefer home
-
-```sh
-doit --echo --me ^task1
-=> clojure -M:home/1
-```
-
-Override from home
-
-```sh
-doit --echo ^task2
-=> clojure -M:home/2
-```
-
-Override from project when preferring home
-
-```sh
-doit --echo -m ^task3
-=> clojure -M:project/3
-```
-
-Override from home and project
-
-```sh
-doit --echo ^task4
-=> clojure -M:project/4
-```
-
-Override from home and project, then favor home's override
-
-```sh
-doit --echo --me ^task4
-=> clojure -M:home/4
-```
-
-### Home level task
-
-```sh
-doit --echo ^taskA
-=> clojure -M:home/A
-```
-
-### Replace for params / aliases
-
-```sh
-doit --echo mycmd ^params1
-=> mycmd --run home
-```
-
-```sh
-doit --echo clojure -M:dev/run^alias1
-=> clojure -M:dev/run:env/home
-```
-
-### Yes its just a string replacement tool
-
-Add your own aliases and params
-
-```sh
-doit --echo ^task1:env/demo --run demo
-=> clojure -M:project/1:env/demo --run demo
-```
-
-Combine aliases
-
-```sh
-doit --echo ^task1^alias1 ^params1
-=> clojure -M:project/1:env/home --run home
-```
-
-Aliases of aliases
-
-```sh
-doit --echo ^task1^combined1
-=> clojure -M:project/1:env/home --run home
-```
-
-Easy multiline.  Multiline tasks just get str joined.
-
-```sh
-doit --echo ^multiline1
-=> mycmd  --param 1
-```
-
-If you want to run multiple tasks from this use &&
-
-```sh
-doit --echo ^multiline2
-=> mycmd  && mycmd1
-```
+[see examples](./docs/examples.md)
 
 ## Why not other tools?
 
 There are other cli tools that help alot.  Makefile, package.json, bashrc, etc.  None of these solutions work well for certain clojure specific aliases.  They don't include the same home -> project hierarchy you get from lein or deps.edn.
 
-### bashrc
-
-Lets looks at bashrc
-
-```bash
-alias lls=ls
-```
-
-You can call `lls -lash` like if you were calling `ls -lash`.  What you cant do is tie this to a project / repo.
-
-```bash
-alias ccm=clojure -M
-```
-
-You cant do  `ccm:my-repl`.
-
-### make file
-
-```make
-example:
-  ls
-```
-
-This wont work `make example -lash` because the `-lash` is a param to `npm` not `ls`. Taking in params can be done with variables but are annoyingly specific to each call, and more verbose.
-
-### package.json
-
-same as above
-
-```json
-  "scripts": {
-    "lss": "ls",
-  },
-```
-
-`npm run lss` is fine
-
-`npm run lss -lash` doesn't work because the `-lash` is a param to `npm` not `ls`.
-
-### Clojure specific examples
-
-We have a deps.edn where every alias is defined independently instead of a large specific alias.
-
-{:aliases {:env {:example "x"}}}
-
-then we get calls like
-
-clojure -M:env
-
-And a makefile could be
-
-```make
-dev:
-  clojure -M:env
-```
-
-For calling `make dev`
-
-The issues is that you cant then do `make dev --watch` or `make dev:cider`
+[some examples of others](./docs/the-other.md)
