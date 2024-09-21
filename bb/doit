@@ -136,7 +136,7 @@
 (defn sh-wrapper [cmd-str]
   (let [cmds (str/split cmd-str #"&&")]
     (doseq [cmd cmds]
-      (shell cmd))))
+      (shell {:continue true} cmd))))
 
 (comment
   (str/split "git add . && git commit -m auto-publish" #"&&"))
