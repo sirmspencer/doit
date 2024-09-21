@@ -32,7 +32,8 @@
                   all-rest (-> (apply str rest)
                                str/trim)]
               (when (str/includes? all-rest (str "^" just-task))
-                (throw (ex-info (str "Cannot reference self in task: " just-task ": " all-rest) {})))
+                (println (str "Cannot reference self in task: " just-task ": " all-rest))
+                (System/exit 1))
               (assoc acc just-task all-rest)))
           {}
           cmds))
@@ -83,7 +84,9 @@
                            mystr
                            config)]
       (cond
-        (< 100 cnt) (throw (ex-info (str "Missing tasks definitions: " mystr) {}))
+        (< 100 cnt) (do
+                      (println (str "Missing tasks definitions: " mystr))
+                      (System/exit 1))
         (str/includes? replaced "^") (recur replaced (inc cnt))
         :else (str/replace replaced "~/" (str (System/getProperty "user.home") "/"))))))
 
