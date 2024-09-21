@@ -10,6 +10,9 @@ cp-brew:
 lls:
   ls -lash
 
+auto-commit:
+  git add . && git commit -m auto-publish
+
 publish:
   git push
   && sh auto-increment.sh
