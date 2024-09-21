@@ -136,6 +136,7 @@
 (defn sh-wrapper [cmd-str]
   (let [cmds (str/split cmd-str #"&&")]
     (doseq [cmd cmds]
+      (println cmd)
       (shell {:continue true} cmd))))
 
 (comment
