@@ -75,72 +75,68 @@ mytask:
 - Read local from project root and not just current directory, if in a git project.
 - Variables. sum like `^task:repl --param ^var1^=dev`
 
-## Demo
+## Examples
 
-I wrote a proof of concept in babashka.  It uses fixed files instead of looking for project / home files for demo purposes.
-
-```sh
-cd bb
-```
+Refer to /demo for the config used to generate these.
 
 ### Project level task
 
 ```sh
-bb do.bb --echo ^task1
+doit --echo ^task1
 => clojure -M:project/1
 ```
 
 Prefer home
 
 ```sh
-bb do.bb --echo --me ^task1
+doit --echo --me ^task1
 => clojure -M:home/1
 ```
 
 Override from home
 
 ```sh
-bb do.bb --echo ^task2
+doit --echo ^task2
 => clojure -M:home/2
 ```
 
 Override from project when preferring home
 
 ```sh
-bb do.bb --echo -m ^task3
+doit --echo -m ^task3
 => clojure -M:project/3
 ```
 
 Override from home and project
 
 ```sh
-bb do.bb --echo ^task4
+doit --echo ^task4
 => clojure -M:project/4
 ```
 
 Override from home and project, then favor home's override
 
 ```sh
-bb do.bb --echo --me ^task4
+doit --echo --me ^task4
 => clojure -M:home/4
 ```
 
 ### Home level task
 
 ```sh
-bb do.bb --echo ^taskA
+doit --echo ^taskA
 => clojure -M:home/A
 ```
 
 ### Replace for params / aliases
 
 ```sh
-bb do.bb --echo mycmd ^params1
+doit --echo mycmd ^params1
 => mycmd --run home
 ```
 
 ```sh
-bb do.bb --echo clojure -M:dev/run^alias1
+doit --echo clojure -M:dev/run^alias1
 => clojure -M:dev/run:env/home
 ```
 
@@ -149,35 +145,35 @@ bb do.bb --echo clojure -M:dev/run^alias1
 Add your own aliases and params
 
 ```sh
-bb do.bb --echo ^task1:env/demo --run demo
+doit --echo ^task1:env/demo --run demo
 => clojure -M:project/1:env/demo --run demo
 ```
 
 Combine aliases
 
 ```sh
-bb do.bb --echo ^task1^alias1 ^params1
+doit --echo ^task1^alias1 ^params1
 => clojure -M:project/1:env/home --run home
 ```
 
 Aliases of aliases
 
 ```sh
-bb do.bb --echo ^task1^combined1
+doit --echo ^task1^combined1
 => clojure -M:project/1:env/home --run home
 ```
 
 Easy multiline.  Multiline tasks just get str joined.
 
 ```sh
-bb do.bb --echo ^multiline1
+doit --echo ^multiline1
 => mycmd  --param 1
 ```
 
 If you want to run multiple tasks from this use &&
 
 ```sh
-bb do.bb --echo ^multiline2
+doit --echo ^multiline2
 => mycmd  && mycmd1
 ```
 
@@ -185,9 +181,7 @@ bb do.bb --echo ^multiline2
 
 There are other cli tools that help alot.  Makefile, package.json, bashrc, etc.  None of these solutions work well for certain clojure specific aliases.  They don't include the same home -> project hierarchy you get from lein or deps.edn.
 
-### Examples
-
-#### bashrc
+### bashrc
 
 Lets looks at bashrc
 
@@ -203,7 +197,7 @@ alias ccm=clojure -M
 
 You cant do  `ccm:my-repl`.
 
-#### make file
+### make file
 
 ```make
 example:
@@ -212,7 +206,7 @@ example:
 
 This wont work `make example -lash` because the `-lash` is a param to `npm` not `ls`. Taking in params can be done with variables but are annoyingly specific to each call, and more verbose.
 
-#### package.json
+### package.json
 
 same as above
 
@@ -226,7 +220,7 @@ same as above
 
 `npm run lss -lash` doesn't work because the `-lash` is a param to `npm` not `ls`.
 
-#### Clojure specific examples
+### Clojure specific examples
 
 We have a deps.edn where every alias is defined independently instead of a large specific alias.
 
