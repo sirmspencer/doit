@@ -24,3 +24,6 @@ cp-brew:
 
 auto-commit:
   git add . && git commit -m auto-publish
+
+ap:
+  git commit -m auto-publish
