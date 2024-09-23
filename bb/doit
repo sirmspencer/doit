@@ -3,7 +3,7 @@
   (:require [clojure.string :as str]
             [babashka.fs :as fs]
             [clojure.java.shell :as sh]
-            [babashka.process :refer [shell exec]]))
+            [babashka.process :refer [shell]]))
 
 
 ;; Add code
@@ -97,6 +97,9 @@
    :me   {:param-count 1
           :key :me
           :help "-m --me will change the merge order to favor home tasks"}
+   :ls   {:param-count 1
+          :key :ls
+          :help "-ls will list the available tasks"}
    :echo {:param-count 1
           :key :echo
           :help "-e --echo will print the command without running it"}
@@ -107,6 +110,7 @@
 (defn get-command [cmd]
   (case cmd
     ("-h" "--help") (:help known-commands)
+    ("-l" "--ls") (:ls known-commands)
     ("-m" "--me") (:me known-commands)
     ("-e" "--echo") (:echo known-commands)
     nil))
@@ -136,6 +140,14 @@
     (println help)
     (println "")))
 
+(defn print-ls [config]
+  (println "------- available tasks -------\n")
+  (doseq [[task cmd] config]
+    (println task)
+    (println "  " cmd)
+    (println "")))
+
+
 (defn sh-wrapper [cmd-str]
   (let [cmds (str/split cmd-str #"&&")]
     (doseq [cmd cmds]
@@ -150,10 +162,12 @@
       me? (contains-command? params :me)
       config (read-config {:me? me?})
       cmd-replaced (do-replace config cmd)]
-
   (cond
     (contains-command? params :help)
     (print-help)
+
+    (contains-command? params :ls)
+    (print-ls config)
 
     (contains-command? params :echo)
     (println cmd-replaced)
