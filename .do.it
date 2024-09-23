@@ -7,6 +7,9 @@ edit:
 lls:
   ls -lash
 
+brew-local:
+  export HOMEBREW_NO_INSTALL_FROM_API=1
+
 auto-commit:
   git add .
   && git commit -m auto-publish
