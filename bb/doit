@@ -149,10 +149,14 @@
 
 
 (defn sh-wrapper [cmd-str]
-  (let [cmds (str/split cmd-str #"&&")]
-    (doseq [cmd cmds]
-      (println cmd)
-      (shell {:continue true} cmd))))
+  (try
+    (let [cmds (str/split cmd-str #"&&")]
+      (doseq [cmd cmds]
+        (println "Running: " cmd)
+        (shell {:continue true} cmd)))
+    (catch Exception _
+      (println "Invalid resulting command: " cmd-str)
+      (System/exit 1))))
 
 (comment
   (str/split "git add . && git commit -m auto-publish" #"&&"))
