@@ -74,6 +74,26 @@ Call with
 doit ^mytask -lash
 ```
 
+### Other commands
+
+Show help
+
+```sh
+doit --help
+```
+
+List the combined set of tasks
+
+```sh
+doit --ls
+```
+
+Echo result instead of shelling it
+
+```sh
+doit --echo
+```
+
 ## Limitations
 
 - Not windows compatible
