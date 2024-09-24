@@ -1,4 +1,8 @@
-_doit_complete {
+_doit_complete() {
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  echo $cur
+  echo $prev
   printf -v "look at me"
   COMPREPLY=("test")
 }
