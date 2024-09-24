@@ -1,4 +1,6 @@
 #compdef doit
 
-echo "Hello from doit zsh"
-_values "abc"
+doit() {
+    echo "Hello from doit zsh"
+    _values "abc" "test"
+}
